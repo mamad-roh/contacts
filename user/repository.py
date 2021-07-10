@@ -71,3 +71,11 @@ def get_user(current_user):
 def get_users(db: Session):
     users = db.query(models.UserModels).offset(20).limit(10).all()
     return users
+
+
+#update user details
+def update(db: Session, current_user,request: schemas.UserPost):
+    id = current_user.id
+    user = db.query(models.UserModels).filter(
+        models.UserModels.id == id
+    )

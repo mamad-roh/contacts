@@ -37,3 +37,15 @@ def all_users(
     db: Session= Depends(get_db)
 ):
     return repository.get_users(db)
+
+
+#update user details
+@router.put('/', status_code= status.HTTP_200_OK)
+def update(
+    request: schemas.UserPost,
+    db:Session,
+    current_user: schemas.UserSchemas = Depends(
+        jwt.get_current_active_user
+    ),
+):
+    pass
