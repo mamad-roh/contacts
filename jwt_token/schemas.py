@@ -8,4 +8,4 @@ class TokenSchemas(BaseModel):
 
 
 class TokenData(BaseModel):
-    username: Optional[str] = None
+    id: Optional[str] = None

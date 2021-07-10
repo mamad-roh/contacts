@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from os import stat
 from typing import Optional
 from jose import jwt, JWTError
 from fastapi import HTTPException, status, Depends
@@ -95,8 +96,8 @@ def get_current_user(
     except JWTError:
         raise credentials_exception
 
-    user = db.query(models.UserModel).filter(
-        models.UserModel.username == token_data.username
+    user = db.query(models.UserModels).filter(
+        models.UserModels.id == token_data.id
     ).first()
     if user is None:
         raise credentials_exception
@@ -106,7 +107,8 @@ def get_current_user(
 def get_current_active_user(
     current_user: schemas.UserSchemas = Depends(get_current_user)
 ):
-    if not current_user.is_active:
+
+    if not current_user.status:
         raise HTTPException(status_code=400, detail="Inactive user")
     return current_user
 

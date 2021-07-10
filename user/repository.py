@@ -1,4 +1,5 @@
 
+from jwt_token import jwt
 from starlette import status
 from user import models, schemas
 from sqlalchemy.orm import Session
@@ -46,3 +47,9 @@ def check_existing_user(username: str, db: Session):
         return True
     else:
         return False
+
+
+def get_user(current_user):
+    #return user details
+
+    return jwt.read_users_me(current_user)

@@ -6,7 +6,6 @@ class UserSchemas(BaseModel):
     class Config:
         orm_mode =True
     username: str
-    password: str
     fullname: str
     status: bool
 
