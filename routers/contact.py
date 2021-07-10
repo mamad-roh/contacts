@@ -63,3 +63,15 @@ def delete(
     )
 ):
     return repository.destroy(db, current_user, id)
+
+
+#get contact details
+@router.get('/{id}', status_code= status.HTTP_200_OK, response_model= schemas.ShowContacts)
+def show(
+    id: int,
+    db: Session = Depends(get_db),
+    current_user = Depends(
+        jwt.get_current_active_user
+    )
+):
+    return repository.details(db, current_user, id)

@@ -1,13 +1,10 @@
-
 from os import stat
 from typing import List
 
 from sqlalchemy.sql.expression import delete
 from contact import models, schemas
-import contact
-from jwt_token import jwt
 from starlette import status
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, contains_alias
 from fastapi import HTTPException
 from user import repository
 from sqlalchemy import or_
@@ -96,3 +93,21 @@ def destroy(db: Session, current_user, contact_id: int):
         status_code= status.HTTP_404_NOT_FOUND, 
         detail='contact not found'
     )
+
+
+#get contact details
+def details(db: Session, current_user, contact_id: int):
+    user_id = current_user.id
+    contact = db.query(models.ContactModels).filter(
+        models.ContactModels.id == contact_id,
+        models.ContactModels.user_id == user_id
+    ).first()
+
+    if contact is not None:
+        return contact
+    else:
+        raise HTTPException(
+            status_code= status.HTTP_400_BAD_REQUEST,
+            detail= 'contact not found'
+        )
+
