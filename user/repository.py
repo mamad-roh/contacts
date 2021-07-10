@@ -53,3 +53,9 @@ def get_user(current_user):
     #return user details
 
     return jwt.read_users_me(current_user)
+
+
+#get all users
+def get_users(db: Session):
+    users = db.query(models.UserModels).all()
+    return users

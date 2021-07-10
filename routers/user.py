@@ -1,3 +1,4 @@
+from typing import List
 from jwt_token import jwt
 from fastapi import Depends, status
 from sqlalchemy.orm.session import Session
@@ -6,6 +7,7 @@ from database import database
 from user import repository
 
 from fastapi import APIRouter
+
 
 router = APIRouter(
     tags=['User'],
@@ -25,3 +27,13 @@ def me_details(
     )
 ):
     return repository.get_user(current_user)
+
+
+@router.get('/', status_code= status.HTTP_200_OK, response_model=List[schemas.UserSchemas])
+def all_users(
+    current_user: schemas.UserSchemas = Depends(
+        jwt.get_current_active_user
+    ),
+    db: Session= Depends(get_db)
+):
+    return repository.get_users(db)
