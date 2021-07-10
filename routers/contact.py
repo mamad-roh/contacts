@@ -75,3 +75,18 @@ def show(
     )
 ):
     return repository.details(db, current_user, id)
+
+
+#update contact
+@router.put('/{id}', status_code= status.HTTP_200_OK)
+def update(
+    id: int,
+    request: schemas.ContactPost,
+    db: Session = Depends(get_db),
+    current_user = Depends(
+        jwt.get_current_active_user
+    )
+):
+    return repository.update(db, current_user,id, request)
+
+    

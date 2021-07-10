@@ -111,3 +111,25 @@ def details(db: Session, current_user, contact_id: int):
             detail= 'contact not found'
         )
 
+# update contact
+def update(db: Session, current_user, contact_id: int,request: schemas.ShowContacts):
+    user_id = current_user.id
+    check_contact = check_exist_contact(db, user_id,request)
+        
+    if check_contact is False:
+        raise HTTPException(
+        status_code= status.HTTP_400_BAD_REQUEST,
+        detail= f'contact : {request.name} {request.family} is exist'
+    )
+    new_request = dict(request)
+    new_request['user_id'] = user_id
+    update_contact = models.ContactModels(**new_request)
+    new = db.query(models.ContactModels).filter(
+        models.ContactModels.id == contact_id,
+        models.ContactModels.user_id == user_id
+    )
+    new.update(new_request)
+    db.commit()
+    return {
+        'details': 'contact updated'
+    }
