@@ -1,5 +1,4 @@
 from sqlalchemy import Column, Integer, String, Boolean
-from sqlalchemy.util.langhelpers import string_or_unprintable
 from database.database import Base
 
 

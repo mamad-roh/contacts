@@ -1,6 +1,5 @@
-from typing_extensions import Annotated
+
 from pydantic import BaseModel
-from pydantic.fields import Field
 from fastapi import Query
 
 class UserSchemas(BaseModel):
