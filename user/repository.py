@@ -48,6 +48,18 @@ def check_existing_user(username: str, db: Session):
     else:
         return False
 
+#check existing user by id
+def check_existing_user_by_id(id: int, db: Session):
+    user = db.query(models.UserModels).filter(
+        models.UserModels.id == id
+    ).first()
+    
+    if user is None:
+        return False
+    else:
+        return True
+
+
 
 def get_user(current_user):
     #return user details
@@ -57,5 +69,5 @@ def get_user(current_user):
 
 #get all users
 def get_users(db: Session):
-    users = db.query(models.UserModels).all()
+    users = db.query(models.UserModels).offset(20).limit(10).all()
     return users

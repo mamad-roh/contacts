@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Boolean
+from sqlalchemy.orm import relationship
 from database.database import Base
 
 
@@ -10,3 +11,4 @@ class UserModels(Base):
     username = Column(String(50), index=True)
     password = Column(String)
     status = Column(Boolean, default=True)
+    # child = relationship("Contact", backref="users")
